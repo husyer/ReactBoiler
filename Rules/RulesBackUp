@@ -1,0 +1,16 @@
+{
+  "rules": {
+ "users": {
+      ".read": "auth != true",
+      ".write": "auth != true",
+    },
+ "Projects": {
+        ".read": "auth != null && auth.uid == data.child('uid').val()",
+        ".write": "auth != null",
+    },
+   "Todos": {
+			".read": "auth != null",
+      ".write": "auth != null",
+    }
+  }
+}
