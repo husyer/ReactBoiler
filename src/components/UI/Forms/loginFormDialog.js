@@ -46,7 +46,7 @@ export class LoginForm extends Component {
           validationError='This field cannnot be empty'
           validations="isWhiteSpace"
           TextFieldId='login'
-          TextFieldLabel='Login'
+          TextFieldLabel='Email'
           type="text"
           required
           handleChange={this.loginChanged}

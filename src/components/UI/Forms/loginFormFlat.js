@@ -5,7 +5,6 @@ import React, { Component, Fragment } from 'react';
 
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 
 import Formsy from 'formsy-react';
@@ -70,7 +69,7 @@ export class registerForm extends Component {
           onInvalid={this.disableButton}
         >
           <CannotBeEmpty
-            name='description'
+            name='Login'
             validations={{
               isEmail: true,
               maxLength: 50,
@@ -81,6 +80,7 @@ export class registerForm extends Component {
               maxLength: 'You can not type in more than 50 characters',
               isWhiteSpace: 'Space not allowed'
             }}
+            TextFieldId='Login'
             TextFieldLabel='Email'
             type="text"
             required
