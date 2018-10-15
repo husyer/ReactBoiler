@@ -3,14 +3,14 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
-import * as actionTypes from '../../../store/actions/auth'
+import * as actionTypes from '../../store/actions/auth'
 
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
-import InputWithValidations from '../../FormsValidations/inputwithValidations'
+import InputWithValidations from '../FormsValidations/inputwithValidations'
 import Formsy from 'formsy-react';
 
 export class LoginForm extends Component {

@@ -1,11 +1,9 @@
-import CircularProgress from '@material-ui/core/CircularProgress'
-
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import * as actionTypes from '../../store/actions/index'
 
-import RegisterForm from '../../components/UI/Forms/registerForm'
-import LoginForm from '../../components/UI/Forms/loginFormFlat'
+import RegisterForm from '../../components/Forms/registerForm'
+import LoginForm from '../../components/Forms/loginFormFlat'
 import SwipeableViews from 'react-swipeable-views';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';

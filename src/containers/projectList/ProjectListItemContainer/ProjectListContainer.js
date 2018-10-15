@@ -8,8 +8,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
-import ConfirmationDialog from '../../../components/UI/Forms/DeleteWithDialog'
-import EditProjectDialog from '../../../components/UI/Forms/editProjectDialog'
+import ConfirmationDialog from '../../../components/Forms/DeleteWithDialog'
+import EditProjectDialog from '../../../components/Forms/editProjectDialog'
 
 import {
   Link

@@ -7,9 +7,9 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
-import CannotBeEmpty from '../../FormsValidations/inputwithValidations'
+import CannotBeEmpty from '../FormsValidations/inputwithValidations'
 import Formsy from 'formsy-react';
-import InputWithvalidations from '../../FormsValidations/inputwithValidations'
+import InputWithvalidations from '../FormsValidations/inputwithValidations'
 const isEmptyError = "This field cannot be empty"
 
 class DialogWrapper extends React.Component {

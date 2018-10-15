@@ -6,7 +6,7 @@ import SearchIcon from '@material-ui/icons/Search'
 import InputAdornment from '@material-ui/core/InputAdornment';
 
 import TodoItem from './todoListTodoItem/todoListItem'
-import EditTaskDialogs from '../../../components/UI/Forms/editTaskDialogs'
+import EditTaskDialogs from '../../../components/Forms/editTaskDialogs'
 import ZoomInDialog from '../../../components/UI/Dialogs/zoomInDialog'
 
 

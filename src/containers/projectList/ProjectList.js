@@ -9,7 +9,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import DoneIcon from '@material-ui/icons/Done'
 
 import ProjectListItemContainer from './ProjectListItemContainer/ProjectListContainer'
-import AddProjectDialog from '../../components/UI/Forms/addProjectDialog'
+import AddProjectDialog from '../../components/Forms/addProjectDialog'
 
 
 const styles = theme => ({

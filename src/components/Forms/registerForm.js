@@ -5,10 +5,11 @@ import React, { Component, Fragment } from 'react';
 
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 
 import Formsy from 'formsy-react';
-import CannotBeEmpty from '../../../components/FormsValidations/inputwithValidations'
+import CannotBeEmpty from '../FormsValidations/inputwithValidations'
 
 const styles = theme => ({
   root: theme.mixins.gutters({
@@ -35,8 +36,8 @@ export class registerForm extends Component {
     this.setState({ email: event.target.value });
   }
 
-  submit = () => {
-    this.props.submitLogin(this.state.email, this.state.password);
+  submitRegister = () => {
+    this.props.submitRegister(this.state.email, this.state.password);
   }
 
   enableButton = () => {
@@ -61,26 +62,19 @@ export class registerForm extends Component {
     return (
       <Fragment>
         <Typography variant="display1" component="h3">
-          Log in
+          Create an account
         </Typography>
         <Formsy
-          onValidSubmit={this.submit}
+          ref={(e) => this.maRef = e}
+          onValidSubmit={this.submitRegister}
           onValid={this.enableButton}
           onInvalid={this.disableButton}
+          hidden={this.props.isHidden}
         >
           <CannotBeEmpty
-            name='Login'
-            validations={{
-              isEmail: true,
-              maxLength: 50,
-              isWhiteSpace: true
-            }}
-            validationErrors={{
-              isEmail: 'You have to type valid email',
-              maxLength: 'You can not type in more than 50 characters',
-              isWhiteSpace: 'Space not allowed'
-            }}
-            TextFieldId='Login'
+            name='description'
+            validationError='This field must be an email'
+            TextFieldId='email'
             TextFieldLabel='Email'
             type="text"
             required
@@ -99,16 +93,18 @@ export class registerForm extends Component {
               minLength: 'Password should be at least 6 characters',
               isWhiteSpace: 'Space are not allowed'
             }}
-            TextFieldId='passwordLoginFlat'
+            TextFieldId='password'
             TextFieldLabel='Password'
             type="password"
             required
             handleChange={this.passwordChanged}
           />
 
+
+
           {this.props.withButton ?
-            (<Button type='submit' variant='outlined'>
-              Log in
+            (<Button type='submit' variant='outlined' autoFocus>
+              Register
           </Button>) : ('')}
         </Formsy>
       </Fragment>

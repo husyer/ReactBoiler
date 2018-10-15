@@ -8,7 +8,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
-import InputWithvalidations from '../../FormsValidations/inputwithValidations'
+import InputWithvalidations from '../FormsValidations/inputwithValidations'
 
 import Formsy from 'formsy-react';
 class EditProjectDialog extends React.Component {

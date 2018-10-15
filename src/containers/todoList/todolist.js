@@ -18,7 +18,7 @@ import { Grid } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
 import TodoListTodo from './TodoListTodo/todoListTodo'
-import AddTaskDialogs from '../../components/UI/Forms/AddTaskDialogs'
+import AddTaskDialogs from '../../components/Forms/AddTaskDialogs'
 
 function TabContainer({ children, dir }) {
     return (

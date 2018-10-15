@@ -7,53 +7,40 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
-
+import CannotBeEmpty from '../FormsValidations/inputwithValidations'
 import Formsy from 'formsy-react';
-import CannotBeEmpty from '../../FormsValidations/inputwithValidations'
-
-
+import InputWithvalidations from '../FormsValidations/inputwithValidations'
 const isEmptyError = "This field cannot be empty"
 
-class ResponsiveDialog extends React.Component {
+class EditTaskDialog extends React.Component {
+
     state = {
-        open: false,
         isValid: false,
-        titleErrorMessage: "",
-        titleError: false,
-        descriptionErrorMessage: "",
-        descriptionError: false,
         todoItem: {
-            projectId: this.props.projectId,
-            isDone: false
+            title: '',
+            date: '',
+            description: '',
+            isDone: '',
+            id: ''
         },
     };
 
 
 
-    handleClickOpen = () => {
-        this.setState({ open: true });
-    };
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.todoItem !== this.props.todoItem || nextProps.todoItemId !== this.props.todoItemId) {
+            this.setState({
+                todoItem: {
+                    ...nextProps.todoItem,
+                    id: nextProps.todoItemId
+                }
+            });
+        }
+    }
 
-    handleClose = () => {
-        this.setState({ open: false });
-    };
 
     handleChangeTitle = (e) => {
-        this.setState({ todoItem: { ...this.state.todoItem, title: e.target.value } },
-            () => {
-                if (this.state.todoItem.title.trim() == "") {
-                    this.setState({
-                        titleError: true,
-                        titleMessageError: isEmptyError
-                    })
-                } else {
-                    this.setState({
-                        titleMessageError: '',
-                        titleError: false,
-                    })
-                }
-            }
-        )
+        this.setState({ todoItem: { ...this.state.todoItem, title: e.target.value } })
     }
 
     handleChangeDesc = (e) => {
@@ -61,9 +48,8 @@ class ResponsiveDialog extends React.Component {
     }
 
 
-    handleSave = () => {
-        this.props.onSavingTodoItem(this.state.todoItem)
-        this.setState({ open: false });
+    handleEditTask = () => {
+        this.props.editTask(this.state.todoItem)
     }
 
     enableButton = () => {
@@ -78,49 +64,51 @@ class ResponsiveDialog extends React.Component {
         const { fullScreen } = this.props;
 
         return (
-            <div style={{ marginBottom: 10 }} >
-                <Button variant='outlined' onClick={this.handleClickOpen}>Add a task</Button>
+            <div>
+
                 <Dialog
                     fullWidth
                     fullScreen={fullScreen}
-                    open={this.state.open}
-                    onClose={this.handleClose}
+                    open={this.props.open}
+                    onClose={this.props.closeEditDialog}
                     aria-labelledby="responsive-dialog-title"
-                >
-                    <Formsy onValidSubmit={this.handleSave} onValid={this.enableButton} onInvalid={this.disableButton}>
 
-                        <DialogTitle id="responsive-dialog-title">Add a task</DialogTitle>
-                        <DialogContent>
+                >
+                    <Formsy onValidSubmit={this.handleEditTask} onValid={this.enableButton} onInvalid={this.disableButton}>
+                        <DialogTitle id="responsive-dialog-title">Edit Task</DialogTitle>
+                        <DialogContent style={{ minWidth: '400px' }}>
                             <DialogContentText>
-                               A task list need a name and a description.
+                                Edit Task.
             </DialogContentText>
 
-                            <CannotBeEmpty
+                            <InputWithvalidations
                                 name='description'
                                 validationError={isEmptyError}
                                 validations="isWhiteSpace"
                                 TextFieldId='title'
                                 TextFieldLabel='Title'
+                                value={this.state.todoItem.title}
                                 type="text"
                                 required
                                 handleChange={this.handleChangeTitle}
                             />
 
-                            <CannotBeEmpty
-                                multiline
+                            <InputWithvalidations
                                 name='description'
                                 validationError={isEmptyError}
                                 validations="isWhiteSpace"
                                 TextFieldId='description'
                                 TextFieldLabel='Description'
+                                value={this.state.todoItem.description}
+                                type="text"
                                 required
+                                multiline
                                 handleChange={this.handleChangeDesc}
                             />
 
-
                         </DialogContent>
                         <DialogActions>
-                            <Button variant='outlined' onClick={this.handleClose} >
+                            <Button variant='outlined' onClick={this.props.closeEditDialog} >
                                 Cancel
                             </Button>
                             <Button variant='outlined' disabled={!this.state.isValid} type="submit" autoFocus>
@@ -135,8 +123,8 @@ class ResponsiveDialog extends React.Component {
     }
 }
 
-ResponsiveDialog.propTypes = {
+EditTaskDialog.propTypes = {
     fullScreen: PropTypes.bool.isRequired,
 };
 
-export default withMobileDialog()(ResponsiveDialog);
+export default withMobileDialog()(EditTaskDialog);

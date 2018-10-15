@@ -10,7 +10,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 
-import InputWithValidations from '../../FormsValidations/inputwithValidations'
+import InputWithValidations from '../FormsValidations/inputwithValidations'
 import Formsy from 'formsy-react';
 
 export class registerForm extends Component {

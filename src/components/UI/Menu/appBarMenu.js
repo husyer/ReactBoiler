@@ -15,8 +15,8 @@ import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 
 
-import LoginForm from '../../../components/UI/Forms/loginFormDialog'
-import RegisterForm from '../../../components/UI/Forms/registerFormDialog'
+import LoginForm from '../../../components/Forms/loginFormDialog'
+import RegisterForm from '../../../components/Forms/registerFormDialog'
 
 const styles = theme => ({
   popperClose: {

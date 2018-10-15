@@ -15,7 +15,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import * as actionTypes from '../UserList/store/actions/userList'
 
-import ButtonDialog from '../../components/UI/Forms/DeleteWithDialog';
+import ButtonDialog from '../../components/Forms/DeleteWithDialog';
 
 
 
