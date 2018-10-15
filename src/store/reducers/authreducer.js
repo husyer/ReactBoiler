@@ -53,7 +53,12 @@ const authFail = (state, action) => {
     });
 };
 
-const reLogSuccess = (state, action) => {
+
+const reLogingStart = (state, action) => {
+    return updateObject(state, { error: null, loading: true });
+};
+
+const reLogingSuccess = (state, action) => {
     return updateObject(state, {
         userId: action.authData.uid,
         userName: action.authData.email,
@@ -154,7 +159,8 @@ const reducer = (state = initialState, action) => {
         case actionTypes.LOGIN_SUCCESS: return authSuccess(state, action);
         case actionTypes.LOGIN_FAIL: return authFail(state, action);
 
-        case actionTypes.RELOGIN_SUCCESS: return reLogSuccess(state, action);
+        case actionTypes.RELOGIN_START: return reLogingStart(state, action);
+        case actionTypes.RELOGIN_SUCCESS: return reLogingSuccess(state, action);
 
         case actionTypes.CREATEUSER_START: return createUserStart(state, action);
         case actionTypes.CREATEUSER_SUCCESS: return createUserSuccess(state, action);

@@ -55,6 +55,12 @@ export const logInSuccess = (authData) => {
     };
 };
 
+export const reLogInStart = () => {
+    return {
+        type: actionTypes.RELOGIN_START,
+    };
+};
+
 export const reLogInSuccess = (authData) => {
     return {
         type: actionTypes.RELOGIN_SUCCESS,
@@ -225,6 +231,14 @@ export const saveTheme = (theme) => {
                 dispatch(savingThemeFail(error));
                 // ...
             });
+    };
+};
+
+export const reLogin = (user) => {
+    return dispatch => {
+        //...
+        dispatch(reLogInStart());
+        dispatch(reLogInSuccess(user));
     };
 };
 

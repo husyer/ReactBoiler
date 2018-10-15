@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 import styled from "styled-components";
@@ -21,22 +21,26 @@ import * as actionTypes from '../../store/actions/auth'
 
 import Sidemenu from '../../components/UI/Menu/Sidemenu'
 import AuthMenu from '../../components/UI/Menu/appBarMenu'
+
 import mountain from '../../static/images/Montain.jpeg'
+import homeBackGround from '../../static/images/HomeBackGround.jpg'
 
 
 const drawerWidth = 270;
 
-const styles = theme => ({
+const styles = (theme, props) => ({
 
   appFrame: {
 
     boxSizing: 'border-box',
-    zIndex: 1,
     overflow: 'hidden',
     position: 'relative',
     display: 'flex',
     width: '100%',
     height: '100%',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center center',
+    backgroundImage: 'url(${mountain})'
   },
 
   drawerPaper: {
@@ -58,13 +62,6 @@ const styles = theme => ({
     [theme.breakpoints.up('md')]: {
       width: `calc(100% - ${drawerWidth}px)`,
     },
-  },
-  content: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3,
-    width: `calc(100% - ${drawerWidth}px)`,
-    overflow: 'auto',
   },
 
   rightIcon: {
@@ -89,6 +86,15 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
   },
+
+  content: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.default,
+    padding: theme.spacing.unit * 3,
+    width: `calc(100% - ${drawerWidth}px)`,
+    overflow: 'auto',
+  },
+
 })
 
 const StyledPaper = styled.div`
@@ -116,6 +122,20 @@ const StyledPaper = styled.div`
 }
 `;
 
+const AppFrame = styled.div`  
+
+  box-sizing: border-box;
+  z-index: 10;
+  overflow: hidden;
+  position: absolute;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center center;
+  background-image: url(${homeBackGround});
+
+`;
 
 class Layout extends React.Component {
 
@@ -143,75 +163,90 @@ class Layout extends React.Component {
       itemDisplay: classes.alignItems
     });
 
+    let monDrawer = ''
+    if (this.props.isLogged) {
+
+      monDrawer = (
+        <Fragment>
+          <Hidden smDown>
+            <Drawer classes={{ paper: classes.drawerPaper }} variant="permanent" anchor="left" open>
+              <StyledPaper>
+                <Sidemenu role={this.props.role} isLogged={this.props.isLogged} userName={this.props.userName} switchTheme={this.props.switchTheme} />
+              </StyledPaper>
+            </Drawer>
+          </Hidden>
+
+          <Hidden mdUp>
+            <Drawer
+              variant="temporary"
+              anchor='left'
+              open={this.state.mobileOpen}
+              onClose={this.handleDrawerToggle}
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+              ModalProps={{
+                keepMounted: true, // Better open performance on mobile.
+              }}
+            >
+              <StyledPaper>
+                <Sidemenu role={this.props.role} isLogged={this.props.isLogged} userName={this.props.userName} switchTheme={this.props.switchTheme} />
+              </StyledPaper>
+            </Drawer>
+          </Hidden>
+        </Fragment>
+      )
+    }
+
+
     return (
-      <div className={classes.appFrame} >
+      <Fragment>
+        <AppFrame>
 
-        <Snackbar
-          open={this.props.snackMessageOpen}
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'right', }}
-          onClose={this.hideMessage}
-          autoHideDuration={2000}
-          message={
-            <span className={classes.message} id="message-id">
-              <DoneIcon />
-              {this.props.message}
-            </span>}
-        />
+          <Snackbar
+            open={this.props.snackMessageOpen}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right', }}
+            onClose={this.hideMessage}
+            autoHideDuration={2000}
+            message={
+              <span className={classes.message} id="message-id">
+                <DoneIcon />
+                {this.props.message}
+              </span>}
+          />
 
-        <AppBar className={classes.appBar} position="absolute" >
-          <Toolbar className={classes.alignItems}>
+          <AppBar className={classes.appBar} position="absolute" style={!this.props.isLogged ? { width: '100%' } : null}>
+            <Toolbar className={classes.alignItems}>
 
-            <Hidden mdUp implementation="css">
-              <IconButton onClick={this.handleDrawerToggle} aria-label="Menu">
-                <MenuIcon />
-              </IconButton>
-            </Hidden>
+              <Hidden mdUp implementation="css">
+                <IconButton onClick={this.handleDrawerToggle} aria-label="Menu">
+                  <MenuIcon />
+                </IconButton>
+              </Hidden>
 
-            <Hidden smDown implementation="css">
-              <Typography className={classes.flex} variant="display1">
-                Task list manager
-            </Typography>
-            </Hidden>
+              <Hidden smDown implementation="css">
+                <Typography className={classes.flex} variant="display1">
+                  Task list manager
+                </Typography>
+              </Hidden>
 
-            <AuthMenu className={classes.menuDroit} isLogged={this.props.isLogged} />
-          </Toolbar>
-        </AppBar>
+              <AuthMenu className={classes.menuDroit} isLogged={this.props.isLogged} />
+            </Toolbar>
+          </AppBar>
+          {/*  On affiche le sidemenu seulement si on est connecte    */}
+          {monDrawer}
 
-        <Hidden smDown implementation="css">
-          <Drawer classes={{ paper: classes.drawerPaper }} variant="permanent" anchor="left" open>
-            <StyledPaper>
-              <Sidemenu role={this.props.role} isLogged={this.props.isLogged} userName={this.props.userName} switchTheme={this.props.switchTheme} />
-            </StyledPaper>
-          </Drawer>
-        </Hidden>
+          <Grid container className={classes.content}
+            style={!this.props.isLogged ? { backgroundColor: 'transparent' } : null}>
+            <Grid item xs={12}>
+              {/* Div Class toolbar un hack pour positionne le contenu sous la appBar vois css */}
+              <div className={classes.toolbar} />
+              {this.props.isLoading || this.props.isLoadingP ? (<CircularProgress size={50} />) : this.props.children}
 
-        <Hidden mdUp>
-          <Drawer
-            variant="temporary"
-            anchor='left'
-            open={this.state.mobileOpen}
-            onClose={this.handleDrawerToggle}
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-            ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
-            }}
-          >
-            <StyledPaper>
-              <Sidemenu role={this.props.role} isLogged={this.props.isLogged} userName={this.props.userName} switchTheme={this.props.switchTheme} />
-            </StyledPaper>
-          </Drawer>
-        </Hidden>
-        <Grid container className={classes.content}>
-          <Grid item xs={12}>
-            {/* Div Class toolbar un hack pour positionne le contenu sous la appBar vois css */}
-            <div className={classes.toolbar} />
-            {this.props.isLoading || this.props.isLoadingP ? (<CircularProgress size={50} />) : this.props.children}
-
+            </Grid>
           </Grid>
-        </Grid>
-      </div>
+        </AppFrame>
+      </Fragment>
     );
   }
 }

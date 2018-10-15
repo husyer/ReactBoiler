@@ -13,8 +13,9 @@ import UserList from './containers/UserList/UserList'
 import TodoList from './containers/todoList/todolist'
 import ProjectList from './containers/projectList/ProjectList'
 import home from './components/home/homePage'
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-import * as actionTypes from './store/actions/auth'
+import * as actionTypes from './store/actions/index'
 
 const styles = {
   root: {
@@ -46,7 +47,8 @@ class Routes extends Component {
     theme: 'light',
     checkedA: 'true',
     checkedB: 'false',
-    role: 'none'
+    role: 'none',
+    loading: true,
 
   }
 
@@ -67,10 +69,12 @@ class Routes extends Component {
             if (!!payload['admin']) {
               this.setState({ role: 'admin' })
             }
+            this.setState({ loading: false })
           })
       } else {
         this.setState({ role: 'none' })
         this.props.history.push('/home')
+        this.setState({ loading: false })
       }
     });
 
@@ -78,6 +82,7 @@ class Routes extends Component {
 
   }
   componentDidMount() {
+
     if (this.props.isLogged && this.props.theme !== this.state.theme) {
       this.setState({ theme: this.props.theme })
     }
@@ -119,7 +124,7 @@ class Routes extends Component {
 
 
 
-    let routes  = (
+    let routes = (
       <Switch>
         <Route path="/home" component={home} />>
     </Switch>
@@ -128,8 +133,8 @@ class Routes extends Component {
     if (this.props.isLogged) {
       routes = (
         <Switch>
-          <Route path="/ProjectList"  render={()=><ProjectList/>}/>>
-          <Route path="/TodoList/:projectId/:projectName"  render={()=><TodoList />}/>>
+          <Route path="/ProjectList" render={() => <ProjectList />} />>
+          <Route path="/TodoList/:projectId/:projectName" render={() => <TodoList />} />>
           <Redirect to='/ProjectList' />
         </Switch>
       )
@@ -139,22 +144,32 @@ class Routes extends Component {
       routes = (
         <Switch>
           <Route path="/UsersList" component={UserList} />>
-          <Route path="/ProjectList"  render={()=><ProjectList/>}/>>
-          <Route path="/TodoList/:projectId/:projectName"  render={()=><TodoList />}/>>
+          <Route path="/ProjectList" render={() => <ProjectList />} />>
+          <Route path="/TodoList/:projectId/:projectName" render={() => <TodoList />} />>
           <Redirect to='/UsersList' />
         </Switch>
+      )
+    }
+    let appLoading = ''
+    if (!this.state.loading) {
+      appLoading = (
+        <MuiThemeProvider theme={theme}>
+          <Layout isLogged={this.props.isLogged} role={this.state.role} userName={this.props.userName} switchTheme={this.OnSwitchTheme}>
+            {routes}
+          </Layout>
+        </MuiThemeProvider>
+      )
+    }
+    else {
+      appLoading = (
+        <CircularProgress size={50} />
       )
     }
 
 
     return (
       <div style={styles.appFrame} className="App">
-        <MuiThemeProvider theme={theme}>
-          <Layout isLogged={this.props.isLogged} role={this.state.role} userName={this.props.userName} switchTheme={this.OnSwitchTheme}>
-            {routes}
-          </Layout>
-        </MuiThemeProvider>
-
+        {appLoading}
       </div>
     );
   }
@@ -164,7 +179,7 @@ const mapStateToProps = state => {
   return {
     isLogged: state.authReducer.isLogged,
     userName: state.authReducer.userName,
-    user:state.authReducer.user,
+    user: state.authReducer.user,
     theme: state.authReducer.theme,
 
   };
@@ -172,10 +187,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onReLogin: (user) => dispatch(actionTypes.reLogInSuccess(user)),
-    onLogin: (user) => dispatch(actionTypes.logInSuccess(user)),
-    onLogout: (user) => dispatch(actionTypes.logOut(user)),
-    saveTheme: (user, theme) => dispatch(actionTypes.saveTheme(user, theme))
+    onReLogin: (user) => dispatch(actionTypes.reLogin(user)),
+    // onLogin: (user) => dispatch(actionTypes.logInSuccess(user)),
+    // onLogout: (user) => dispatch(actionTypes.logOut(user)),
+    // saveTheme: (user, theme) => dispatch(actionTypes.saveTheme(user, theme))
   };
 }
 
