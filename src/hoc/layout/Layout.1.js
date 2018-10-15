@@ -163,6 +163,8 @@ class Layout extends React.Component {
       itemDisplay: classes.alignItems
     });
 
+
+    // si on est pas logguer on affiche le menu invite
     let monDrawer = ''
     if (this.props.isLogged) {
 
@@ -198,9 +200,12 @@ class Layout extends React.Component {
       )
     }
 
+    // si on charge les proprietes on affiche la progressBar
+    let monLayout = ''
+    if (!this.props.layoutLoading) {
 
-    return (
-      <Fragment>
+      monLayout = (
+        <Fragment>
         <AppFrame>
 
           <Snackbar
@@ -246,6 +251,27 @@ class Layout extends React.Component {
             </Grid>
           </Grid>
         </AppFrame>
+      </Fragment>
+      )
+    }
+    else {
+      monLayout = (
+        <Grid
+          container
+          direction="row"
+          justify="center"
+          alignItems="center"
+          style={{ width: '100%', height: '100%' }}
+        >
+          <CircularProgress size={50} />
+        </Grid>
+      )
+    }
+
+
+    return (
+      <Fragment>
+        {monLayout}
       </Fragment>
     );
   }
