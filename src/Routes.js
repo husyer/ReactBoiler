@@ -134,7 +134,7 @@ class Routes extends Component {
         <Switch>
           <Route path="/ProjectList" render={() => <ProjectList />} />>
           <Route path="/TodoList/:projectId/:projectName" render={() => <TodoList />} />>
-
+          <Redirect to='/ProjectList' />
         </Switch>
       )
     }
