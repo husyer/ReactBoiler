@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
-import Layout from './hoc/layout/Layout.1'
+import Layout from './hoc/layout/Layout'
 import FireConnnect from './FireConnnect'
 
 import UserList from './containers/UserList/UserList'
