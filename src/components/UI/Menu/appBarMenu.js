@@ -59,6 +59,7 @@ class MenuListComposition extends React.Component {
 
   Loggout = () => {
     this.props.onLogout();
+    this.setState({ openMenu: false});
   }
 
   Registering = (login,pass) => {
